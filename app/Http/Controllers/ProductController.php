@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Enums\ProductStatusEnum;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -20,7 +21,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Products fetched successfully',
-            'data' => $products
+            'data' => ProductResource::collection($products)
         ]);
     }
     public function store(StoreProductRequest $request)
@@ -33,7 +34,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Product created successfully',
-            'data' => $product
+            'data' => new ProductResource($product)
         ]);
     }
 }
